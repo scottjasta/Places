@@ -1,3 +1,17 @@
+
+function getHTML5Org() {
+}
+
+function updatePlaces(fn, adr-street-address, adr-locality, adr-region, adr-postalcode, geo, tel, url) {
+        var URLlist = "fn="+encodeURI(fn)+"&adr-street-address="+encodeURI(adr-street-address);
+        URLlist += "&adr-region="+encodeURI(adr-region)+"&adr-locality="+encodeURI(adr-locality);
+        URLlist += "&adr-postalcode="+encodeURI(adr-postalcode)+"&geo="+encodeURI(geo);
+        URLlist += "&url="+encodeURI(url)+"&tel="+encodeURI(tel);
+        placesURL = 'http://scottjastaplaces.appspot.com/api/addform.html?' + URLlist;
+        window.open(placesURL,'placesadd','width=500,height=500,scrollbars=yes,resizable=yes');
+}
+
+
 function getYelpAddress() {
 	var addressXML = document.getElementsByTagName('address');
 	var yelpmetadata = document.getElementsByTagName('meta');
@@ -34,21 +48,8 @@ function getYelpAddress() {
 			};
 		}; 
 	};
-	//alert(business);
-	//alert(latitude);
-	//alert(longitude);
-//	alert(address);
-//	alert(locality);
-//	alert(region);
-//	alert(postalcode);
-//	addressstr = business + '\n' + address + '\n' + locality + ', ' + region + ' ' + postalcode;
-//	alert(addressstr);
-	var URLlist = "fn="+encodeURI(business)+"&adr-street-address="+encodeURI(address);
-	URLlist += "&adr-region="+encodeURI(region)+"&adr-locality="+encodeURI(locality);
-	URLlist += "&adr-postalcode="+encodeURI(postalcode)+"&geo="+encodeURI(latitude)+","+encodeURI(longitude);
-	URLlist += "&url="+encodeURI(bizurl)+"&tel="+encodeURI(biztelephone);
-	placesURL = 'http://scottjastaplaces.appspot.com/api/addform.html?' + URLlist;
-	window.open(placesURL,'placesadd','width=500,height=500,scrollbars=yes,resizable=yes');
+	var geo = latitude + ', ' + longitude
+	updatePlaces(business, address, locality, region, postalcode, geo, tel, url)
 }
 function getText(node) {
 var textNodeContents = [];
