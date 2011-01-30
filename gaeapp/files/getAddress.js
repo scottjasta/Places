@@ -49,7 +49,7 @@ function getYelpAddress() {
 		}; 
 	};
 	var geo = latitude + ', ' + longitude
-	updatePlaces(business, address, locality, region, postalcode, geo, tel, url)
+	updatePlaces(business, address, locality, region, postalcode, geo, biztelephone, bizurl)
 }
 function getText(node) {
 var textNodeContents = [];
