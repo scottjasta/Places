@@ -1,0 +1,95 @@
+<html>
+	<head><title>grabber test</title>
+<script language=javascript>
+function getSelText()
+{
+    var txt = '';
+     if (window.getSelection)
+    {
+        txt = window.getSelection();
+             }
+    else if (document.getSelection)
+    {
+        txt = document.getSelection();
+            }
+    else if (document.selection)
+    {
+        txt = document.selection.createRange().text;
+            }
+    else return;
+document.aform.selectedtext.value =  txt;
+}
+</script>
+javascript:(
+	function(){
+		f='http://delicious.com/save?url='+
+			encodeURIComponent(window.location.href)+
+				'&title='+encodeURIComponent(document.title)+
+				'&v=5&';
+		a=function(){
+			if(!window.open(f+'noui=1&jump=doclose',
+				'deliciousuiv5','location=yes,links=no,scrollbars=no,
+					toolbar=no,width=550,height=550'))
+					location.href=f+'jump=yes'};
+			if(/Firefox/.test(navigator.userAgent))
+				{setTimeout(a,0)}
+			else
+				{a()}})()
+		
+
+javascript:
+	var b=document.body;
+	var GR________bookmarklet_domain='http://www.google.com';
+	if(b&&!document.xmlVersion){
+		void(z=document.createElement('script'));
+		void(z.src='http://www.google.com/reader/ui/subscribe-bookmarklet.js');
+		void(b.appendChild(z));}
+	else{
+		location='http://www.google.com/reader/view/feed/'+encodeURIComponent(location.href)}
+
+
+
+javascript:
+function(){
+	t=function(){var txt = '';
+	if (window.getSelection)
+		{txt = window.getSelection();}
+	else if (document.getSelection)
+		{txt = document.getSelection();}
+	else if (document.selection)
+		{txt = document.selection.createRange().text;}
+	return txt};
+	f='http://localhost:8080/save?url=selection'+
+	t;
+
+{var txt = '';
+if (window.getSelection)
+{
+txt = window.getSelection();
+}
+else if (document.getSelection)
+{
+txt = document.getSelection();
+}
+else if (document.selection)
+{
+txt = document.selection.createRange().text;
+}
+(txt);
+}
+</script>
+		
+		
+</head>
+<body>
+		test <a href="">here</a>
+
+			
+
+
+		javascript:
+		d=document;
+		void(window.open('http://localhost:8080/save?selection='+encodeURIComponent(window.getSelection()) + '&docbody='+encodeURIComponent(d.body),'_blank','width=450,height=550,status=no,resizable=yes,scrollbars=auto'));
+
+		javascript:%20d:=document;%20void(window.open('http://localhost:8080/save?selection='+encodeURIComponent(window.getSelection())+'&docbody='+(encodeURIComponent(d.body)),'_blank','width=450,height=550,status=no,resizable=yes,scrollbars=auto'));
+

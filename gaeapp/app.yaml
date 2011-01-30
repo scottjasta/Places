@@ -1,0 +1,31 @@
+#this will change based on the app you register in google app engine
+application: scottjastaplaces
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /files
+  static_dir: files
+
+- url: /remote_api
+  script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
+
+- url: /web/.*
+  script: gui.py
+
+
+- url: /search.*
+  script: web.py
+
+- url: /api/addform.*
+  script: gui.py
+
+
+- url: /test.*
+  script: web.py
+
+
+- url: /
+  script: gui.py
+

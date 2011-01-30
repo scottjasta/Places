@@ -1,0 +1,102 @@
+<html>
+	<head>
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<script type="text/javascript">
+			var map;
+			var http_request = false; 
+			var tag = "hotdog";
+			function initialize() {
+				var latlng = new google.maps.LatLng(42.016597,-87.665533);
+				var markerlng = new google.maps.LatLng(41.969031,-87.671256);
+				var myOptions = {
+	        		zoom: 15,
+					center: latlng,
+			        mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+				var markerOptions = {
+					map: map,
+					position: latlng
+				};
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				google.maps.event.addListener(map, 'bounds_changed', function(){ 
+					function finished(){ 
+						a = showstuff(); 
+					} 
+					clearTimeout(this.timeout); 
+					this.timeout = setTimeout(finished, 200); 
+				}); 
+			}
+
+			function showstuff() {
+				var bounds = '&LatLngBounds=' + map.getBounds().toUrlValue();
+				bounds = bounds + '&location=' + map.getCenter().toUrlValue();
+				tag = document.getElementById("tagvalue").value;
+				var placeurl = '/search.xml?tag=' + tag + bounds;
+				makeRequest(placeurl);
+			}
+			function makeRequest(url) { 
+				if (window.XMLHttpRequest) { // Mozilla, Safari, IE7... 
+					http_request = new XMLHttpRequest(); 
+				} else if (window.ActiveXObject) { // IE6 and older 
+					http_request = new ActiveXObject("Microsoft.XMLHTTP"); 
+				} 
+				http_request.onreadystatechange = updateMarkers; 
+				http_request.open('GET', url, true); 
+				http_request.send(null); 
+			} 
+			function updateMarkers() {
+				if (http_request.readyState == 4) { 
+					if (http_request.status == 200) { 
+						updateMap(http_request.responseXML);
+					} 
+				} 
+			}
+			function updateMap(placesXML) {
+				var places = placesXML.getElementsByTagName("place");
+				//oldMarkers = map.getMarkers();
+
+				map.clearMarkers();
+				for (var i = 0; i < places.length; i++) {
+					var geo = places[i].getElementsByTagName("geo")[0];
+					var latlng = new google.maps.LatLng(
+									parseFloat(geo.getElementsByTagName("latitude")[0].firstChild.nodeValue),
+									parseFloat(geo.getElementsByTagName("longitude")[0].firstChild.nodeValue));
+					var title = places[i].getElementsByTagName("fn")[0].firstChild.nodeValue;
+					var marker = new google.maps.Marker({position: latlng, map: map, title: title});
+				}
+				//for(var i=0; i< oldMarkers.length; i++){
+				//	oldMarkers[i].setMap(null);
+				//}
+			}
+google.maps.Map.prototype.markers = new Array();
+
+google.maps.Map.prototype.getMarkers = function() {
+    return this.markers
+};
+
+google.maps.Map.prototype.clearMarkers = function() {
+    for(var i=0; i<this.markers.length; i++){
+        this.markers[i].setMap(null);
+    }
+    this.markers = new Array();
+};
+
+google.maps.Marker.prototype._setMap = google.maps.Marker.prototype.setMap;
+
+google.maps.Marker.prototype.setMap = function(map) {
+    if (map) {
+        map.markers[map.markers.length] = this;
+    }
+    this._setMap(map);
+}
+	  </script>
+	  </head>
+	  <body onload="initialize()">
+	  Tag: <input value="hotdog" id="tagvalue"><input type="submit" onclick="showstuff();" value="set tag">
+	<hr>
+    <div id="map_canvas" style="width:100%; height:90%"></div>
+</body>
+</html>
+
+

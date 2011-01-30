@@ -1,0 +1,3 @@
+../../google_appengine/appcfg.py upload_data . --filename=../../placesdump.csv --kind=Place --config_file=placeloader.py 
+
+

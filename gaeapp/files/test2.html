@@ -1,0 +1,20 @@
+<html><head><title>Place</title>
+				<script type="text/javascript" src="jquery-1.4.1.js"></script>
+				<script type="text/javascript" src="jquery.jeditable.js"></script>
+				<script type="text/javascript">
+						$(document).ready(function() {
+								$('.edit').editable('/web/update', {
+										     indicator : 'Saving...',
+											      tooltip   : 'Click to edit...'
+												   });
+												    $('.edit_area').editable('http://www.example.com/save.php', { 
+															     type      : 'textarea',
+																      cancel    : 'Cancel',
+																	       submit    : 'OK',
+																		        indicator : '<img src="img/indicator.gif">',
+																				     tooltip   : 'Click to edit...'
+																					      });
+																						   });
+																						    </script>
+																			</head><body><div class="edit" id="name"></div>		</body></html>
+

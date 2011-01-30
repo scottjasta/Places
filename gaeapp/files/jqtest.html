@@ -1,0 +1,32 @@
+<html>                                                                  
+ <head>                                                                  
+ <script type="text/javascript" src="jquery-1.4.1.js"></script>          
+ <script type="text/javascript" src="jquery.jeditable.js"></script>          
+ <script type="text/javascript">                                         
+   // we will add our javascript code here                                     
+ $(document).ready(function() {
+     $('.edit').editable('http://www.example.com/save.php', {
+         indicator : 'Saving...',
+         tooltip   : 'Click to edit...'
+     });
+     $('.edit_area').editable('http://www.example.com/save.php', { 
+         type      : 'textarea',
+         cancel    : 'Cancel',
+         submit    : 'OK',
+         indicator : '<img src="img/indicator.gif">',
+         tooltip   : 'Click to edit...'
+     });
+ });
+ </script>                                                               
+ </head>                                                                 
+ <body>                                                                  
+   <!-- we will add our HTML content here -->                                        
+   hi
+   <a href="">Link</a>
+   <div class="edit" id="div_1">Dolor</div>
+<div class="edit_area" id="div_2">Lorem ipsum dolor sit amet, consectetuer 
+adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore 
+magna aliquam erat volutpat.</div>
+ </body>                                                                 
+ </html>
+

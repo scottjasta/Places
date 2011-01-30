@@ -1,0 +1,81 @@
+body {
+  background: #fff url(../images/bg_black.jpg) repeat-x;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  color: #666;
+  font: 15px/1.4em Arial, Helvetica, Geneva, sans-serif;
+}
+form.editform {
+  margin: 0;
+  padding: 10px;
+}
+form.editform legend {
+  padding: 0 2px;
+  font-weight: bold;
+}
+li.editformsameline {
+  float: left;
+}
+input.editform {
+  width: 360px;
+  }
+input.editformcity {
+  width: 200px;
+  margin-left: 120px;  
+}
+
+input.editformstate {
+  width: 45px;
+  margin-left: 5px;
+  }
+input.editformzip {
+  width: 100px;
+  margin-left: 5px;
+}
+textarea.editform {
+  width: 360px;
+  height: 100px;
+ }
+form.editform button {
+	width: 75px;
+}
+
+form.editform label {
+  display: inline-block;
+  line-height: 1.8;
+  vertical-align: top;
+}
+form.editform fieldset ol {
+  margin: 0;
+  padding: 0;
+}
+form.editform fieldset li {
+  list-style: none;
+  padding: 1px;
+  margin: 0;
+}
+form.editform fieldset fieldset {
+  border: none; 
+  margin: 1px 0 0;
+}
+form.editform fieldset fieldset legend {
+  padding: 0 0 5px;
+  font-weight: normal;
+}
+form.editform fieldset fieldset label {
+  display: block;
+  width: auto;
+}
+form.editform em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+form.editform label {
+  width: 120px; /* Width of labels */
+}
+
+form.editform fieldset fieldset label {
+  margin-left: 123px; /* Width plus 3 (html space) */
+}
