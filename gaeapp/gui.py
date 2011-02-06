@@ -162,12 +162,12 @@ def showMainPage():
 	ret = ret + '<body>'
 	ret = ret + '<h1>Places Database</h1>\r'
 	ret = ret + '<h2>Recent Additions</h2>\r'
-	t = datetime(2010,1,1)
-	n = datetime.today()
-	t = datetime(n.year, n.month, n.day-7)
-	places = db.GqlQuery("SELECT * FROM Place WHERE created_at > :datespec ORDER by created_at", datespec = t)
-	q = getListHTML(places)
-	ret = ret + q
+#	t = datetime(2010,1,1)
+#	n = datetime.today()
+#	t = datetime(n.year, n.month, n.day-7)
+#	places = db.GqlQuery("SELECT * FROM Place WHERE created_at > :datespec ORDER by created_at", datespec = t)
+#	q = getListHTML(places)
+#	ret = ret + q
 	ret = ret + '<h2>Commands</h2>\r'
 	ret = ret + '<ul>\r'
 	ret = ret + '<li><a href=\"/files/test.html\">Map</a></li>\r'
