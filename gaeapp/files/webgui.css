@@ -6,6 +6,22 @@ body {
   color: #666;
   font: 15px/1.4em Arial, Helvetica, Geneva, sans-serif;
 }
+h1 {
+text-align: center;
+color: #ffffff;
+background-color: #000000;
+font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+font-size: 3em;
+padding-top: .5em;
+padding-bottom: .5em;
+}
+h2 {
+color: #333333;
+font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+font-size: 2em;
+padding-top: .5em;
+}
+
 form.editform {
   margin: 0;
   padding: 10px;
@@ -33,12 +49,19 @@ input.editformzip {
   width: 100px;
   margin-left: 5px;
 }
+input.editformlat {
+  width: 10em;
+}
+input.editformlong {
+  width: 10em;
+  margin-left: 10px;
+}
 textarea.editform {
   width: 360px;
   height: 100px;
  }
 form.editform button {
-	width: 75px;
+  width: 75px;
 }
 
 form.editform label {
@@ -78,4 +101,19 @@ form.editform label {
 
 form.editform fieldset fieldset label {
   margin-left: 123px; /* Width plus 3 (html space) */
+}
+
+a.placelink {
+  text-decoration: none;
+  background: #fff;
+  color: #0f0f0f;
+  }
+a.placelink:hover {
+  background: #888;
+  color: #fff;
+  text-decoration: none;
+  }
+
+li {
+	list-style-type:none;
 }

@@ -84,7 +84,7 @@ def hcardEncode(aplace):
 	ret = ret + '</span>'
 	ret = ret + '<span class="tel"><span class="value">' + xformat(aplace.phone) + '</span></span> '
 	ret = ret + '<span class="email"><span class="value">' + xformat(aplace.email) + '</span></span> '
-	ret = ret + '<span class="url">' + xformat(aplace.URL) + '</span>'
+	ret = ret + '<a href="' + xformat(aplace.URL) + '" class="url">' + xformat(aplace.URL) + '</a>'
 	ret = ret + '<span class="geo"><br />' 
 	ret = ret + '(<span class="latitude">' + str(aplace.latitude) + '</span>,'
 	ret = ret + '<span class="longitude">' + str(aplace.longitude) + '</span>) - '
@@ -240,16 +240,16 @@ class searchxml(webapp.RequestHandler):
 class search(webapp.RequestHandler):
 	def get(self):
 		self.response.headers['Content-Type'] = 'text/html'
+		html = '<html><head><title>Places Search</title>'
+		html += '<link href=\"/files/webgui.css\" rel=\"stylesheet\" type=\"text/css\" />\r'
+		html += '</head><body>'
+		self.response.out.write(html)
 		currlocationlat = 41.99765
 		currlocationlong = -87.6745
 		dist = searchplaces(self.request.get('tag', 'hotdog'), self.request.get('latitude', currlocationlat),self.request.get('longitude', currlocationlong), self.request.get('radius', None), self.request.get('owner', None))
 		for place in sorted(dist, key=operator.attrgetter('distance')):
-			ret = hcardEncode(place)
-##			self.response.out.write(place.name) 
-##			self.response.out.write(place.distance) 
-##			self.response.out.write(place.recordid)
-#			self.response.out.write('<hr>')
-			self.response.out.write(ret)
+			html = hcardEncode(place)
+			self.response.out.write(html)
 			self.response.out.write('<hr>')
 		self.response.out.write('<hr>')
 

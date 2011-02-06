@@ -6,6 +6,7 @@ import geoutil
 import urllib2
 from placeskeys import *
 from datetime import datetime
+from datetime import timedelta
 from placesinclude import *
 from google.appengine.api import users
 from google.appengine.ext import webapp
@@ -67,6 +68,96 @@ def placeFormPageNew(aplace, user, formAction='', returnURL='/'):
 	return ret
 
 def placeFormPage(aplace, user, formAction='', returnURL='/'):
+	ret = '<html><head><title>Place</title>'
+	ret += '<link href=\"/files/webgui.css\" rel=\"stylesheet\" type=\"text/css\" />\r'
+	ret += '</head><body>\r'
+	ret += '<form class=\"editform\" action="' + formAction + '" method="post" name="placeForm">'
+	ret += '<input name="returnURL" value="' + returnURL + '" type=\"hidden\">'
+	ret += '<fieldset>\r'
+	ret += '<legend>Place Information</legend>'
+	ret += '<ol class=\"editform\">\r'
+	ret += '<li>'
+	ret += '<label for="name">Name<em>*</em></label>'
+	ret += '<input class=\"editform\" name="name" id="name" placeholder="Business or other name" value="' + fstr(aplace.name) + '"/>'
+	ret += '</li>\r'
+	ret = ret + '<li>'
+	ret = ret + '<label for="address">Address<em></em></label>'
+	ret = ret + '<input class=\"editform\" name="address" id="address" placeholder="Street address" value="' + fstr(aplace.address) + '">'
+	ret = ret + '</li>\r'
+	ret = ret + '<li>'
+	ret = ret + '<label for="address2"><em></em></label>'
+	ret = ret + '<input class=\"editform\" name="address2" id="address2" placeholder="Additional street address" value="' + fstr(aplace.address2) + '">'
+	ret += '</li>\r'
+	ret += '<li class=\"editformsameline\">'
+	ret += '<label for="city" style=\"display: none;\">City<em></em></label>'
+	ret += '<input class=\"editformcity\" name="city" id="city" placeholder="City" value="'+ fstr(aplace.city) + '">'
+	ret += '</li>\r'
+
+	ret += '<li class=\"editformsameline\">'
+	ret += '<label for="state" style=\"display: none\">State<em></em></label>'
+	ret += '<input class=\"editformstate\" name="state" id="state" placeholder="State" value="' + fstr(aplace.state) + '">'
+	ret += '</li>\r'
+
+	ret += '<li>'
+	ret += '<label for="zip" style=\"display: none;\">Zip<em></em></label>'
+	ret += '<input class=\"editformzip\" name="zip" id="zip" placeholder="Zip code" value="' + fstr(aplace.zip) + '">'
+	ret += '</li>\r'
+	ret += '<li class="editformsameline">'
+	ret += '<label for="latitude">Geocode<em></em></label>'
+	ret += '<input class="editformlat" name="latitude" id="latitude" placeholder="Latitude (decimal)" value="' + fstr(aplace.latitude) + '">'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="longitude" style="display:none;">Longitude<em></em></label>'
+	ret += '<input class="editformlong" name="longitude" id="longitude" placeholder="Longitude (decimal)" value="' + fstr(aplace.longitude) + '">'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="phone">Phone<em></em></label>'
+	ret += '<input class=\"editform\" name="phone" id="phone" placeholder="Telephone number" value="' + fstr(aplace.phone) + '" >'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="email">Email<em></em></label>'
+	ret += '<input class=\"editform\" name="email" id="email" placeholder="Email address for Place" value="' + fstr(aplace.email) + '">'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="url">URL<em></em></label>'
+	ret += '<input class=\"editform\" name="url" id="url" placeholder="URL" value="' + fstr(aplace.URL) + '">'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="tag">Tag<em></em></label>'
+	ret += '<input class=\"editform\" name="tag" id="tag" placeholder="Tags (separated by spaces)" value="' + ' '.join(aplace.tag) + '"'	
+	if aplace.name is not None:
+		ret += ' autofocus '
+	ret += '>'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="notes">Notes<em></em></label>'
+	ret += '<textarea class=\"editform\" name="notes" placeholder="Notes" id="notes">' + fstr(aplace.notes) + '</textarea>'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="owner">Owner<em></em></label>'
+	ret += '<input class="editform" name="owner" id="owner" placeholder="Places Database Owner" value="' + fstr(aplace.owner, user.email()) + '">'
+	ret += '</li>\r'
+	ret += '<li>'
+	ret += '<label for="rights">Rights<em></em></label>'
+	ret += '<input class="editform" name="rights" id="rights" placeholder="Places Database Rights" value="' + str(aplace.rights) + '">'
+	ret += '</li>\r'
+	ret = ret + '</ol>\r'
+	ret = ret + '</fieldset>\r'
+	ret = ret + '<button type="submit">Save</button>\r'
+#	if aplace.name is not None:
+#	if aplace.key is not None:
+	if aplace.is_saved():
+		ret = ret + '<a href=\"/web/delete?key=' + str(aplace.key()) + '&returnURL=' + returnURL + '\">delete</a>'
+		ret = ret + '<input name="key" type=\"hidden\" value="' 
+		ret = ret + str(aplace.key()) 
+		ret = ret + '">'
+	ret = ret + '</form>\r'
+	ret = ret + '</body>\r'
+	ret = ret + '</html>'
+	return ret
+
+
+def placeFormPageWorking(aplace, user, formAction='', returnURL='/'):
 	ret = '<html>'
 	ret = ret + '<head>'
 	ret = ret + '<title>Form Test</title>'
@@ -163,18 +254,18 @@ def showMainPage():
 	ret = ret + '<h1>Places Database</h1>\r'
 	ret = ret + '<h2>Recent Additions</h2>\r'
 #	t = datetime(2010,1,1)
-#	n = datetime.today()
-#	t = datetime(n.year, n.month, n.day-7)
-#	places = db.GqlQuery("SELECT * FROM Place WHERE created_at > :datespec ORDER by created_at", datespec = t)
-#	q = getListHTML(places)
-#	ret = ret + q
+	n = datetime.today()
+	t = n - timedelta(days=14)
+	places = db.GqlQuery("SELECT * FROM Place WHERE created_at > :datespec ORDER by created_at DESC", datespec = t)
+	q = getListHTML(places)
+	ret = ret + q
 	ret = ret + '<h2>Commands</h2>\r'
 	ret = ret + '<ul>\r'
-	ret = ret + '<li><a href=\"/files/test.html\">Map</a></li>\r'
-	ret = ret + '<li><a href=\"/web/list\">List</a></li>\r'
-	ret = ret + '<li><a href=\"/web/add\">Add</a></li>\r'
-	ret = ret + '<li><a href=\"/search?tag=hotdog\">search</a></li>\r'
-	ret = ret + '<li><a href=\"/search.xml?tag=hotdog\">search (xml)</a></li>\r'
+	ret = ret + '<li><a href=\"/files/test.html\" class="placelink">Map</a></li>\r'
+	ret = ret + '<li><a href=\"/web/list\" class="placelink">List</a></li>\r'
+	ret = ret + '<li><a href=\"/web/add\" class="placelink">Add</a></li>\r'
+	ret = ret + '<li><a href=\"/search?tag=hotdog\" class="placelink">search</a></li>\r'
+	ret = ret + '<li><a href=\"/search.xml?tag=hotdog\" class="placelink">search (xml)</a></li>\r'
 	ret = ret + '</ul>\r'
 	ret += '<h2><a href="/files/aboutmisc.html">Misc</a></h2>\r'
 	return ret
@@ -245,7 +336,7 @@ class updatePlace(webapp.RequestHandler):
 
 def getListEntryHTML(place, targetURL = '/web/edit', returnURL = '/'):
 	ret = '<li>'
-	ret = ret + '<a href="' + targetURL + '?key=' + str(place.key()) + '&returnURL=' + returnURL + '">'
+	ret = ret + '<a href="' + targetURL + '?key=' + str(place.key()) + '&returnURL=' + returnURL + '" class="placelink">'
 	ret = ret + str(place.name) + ' - ' + str(place.address) 
 	ret = ret + ' ' + str(place.city) + ' ' + str(place.state) 
 	ret = ret + '</a>'
@@ -276,11 +367,15 @@ class showList(webapp.RequestHandler):
 		
 		places = db.GqlQuery("SELECT * FROM Place ORDER BY name")
 		addURL = self.request.application_url + '/web/add'
-		self.response.out.write('<a href="' + addURL + '">add</a>')
-		html = getListHTML(places,  self.request.application_url + '/web/list')
+		html = '<html><head>'
+		html += '<title>Places List</title>'
+		html += '<link href=\"/files/webgui.css\" rel=\"stylesheet\" type=\"text/css\" />\r'
+		html += '</head><body>'
+		html += '<a href="' + addURL + '">add</a>'
+		html += getListHTML(places,  self.request.application_url + '/web/list')
+		html += '<a href="' + addURL + '">add</a>'
+		html += '<hr />'
 		self.response.out.write(html)
-		self.response.out.write('<a href="' + addURL + '">add</a>')
-		self.response.out.write('<hr>')
 
 #		key_name = self.request.get('key')
 #		place = db.get(db.Key(key_name))
