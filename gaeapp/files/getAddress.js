@@ -77,7 +77,7 @@ function updatePlaces(fn, adr_street_address, adr_locality, adr_region, adr_post
         URLlist += "&adr-postalcode="+encodeURI(adr_postalcode)+"&geo="+encodeURI(geo);
         URLlist += "&url="+encodeURI(url)+"&tel="+encodeURI(tel);
         placesURL = 'http://scottjastaplaces.appspot.com/api/addform.html?' + URLlist;
-        window.open(placesURL,'placesadd','width=500,height=500,scrollbars=yes,resizable=yes');
+        window.open(placesURL,'placesadd','width=650,height=500,scrollbars=yes,resizable=yes');
 }
 
 
